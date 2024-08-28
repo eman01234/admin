@@ -1,7 +1,7 @@
 import { siteConfig } from "@/app";
-import { ModeToggle } from "@/components/ui/custom/modeToggle";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata() {
   // useTranslations works both on the server and client;
@@ -14,13 +14,6 @@ export async function generateMetadata() {
 
   return metadata;
 }
-
-export default function HomePage() {
-  // const t = useTranslations();
-
-  return (
-    <div>
-      <ModeToggle />
-    </div>
-  );
+export default function RootPage() {
+  redirect("/en-US/auth/sign-in");
 }

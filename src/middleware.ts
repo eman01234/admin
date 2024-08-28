@@ -1,16 +1,10 @@
 import createMiddleware from "next-intl/middleware";
-import {
-  defaultLocale,
-  localePrefix,
-  locales,
-  pathnames,
-} from "../global.il8n";
+import { defaultLocale, localePrefix, locales } from "../global.il8n";
 
 const intlMiddleware = createMiddleware({
   defaultLocale,
   locales,
   localePrefix,
-  pathnames,
 });
 
 export default intlMiddleware;

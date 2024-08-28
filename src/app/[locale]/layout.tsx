@@ -7,6 +7,26 @@ import localFont from "next/font/local";
 const myFont = localFont({
   src: "../../../public/fonts/NotoSerifEthiopic-VariableFont_wdth,wght.ttf",
 });
+
+const fontSans = localFont({
+  src: "../../../public/fonts/FiraSans-Regular.ttf",
+  variable: "--font-sans",
+  display: "swap",
+  weight: "400",
+});
+
+const fontMono = localFont({
+  src: "../../../public/fonts/GeistMonoVF.woff",
+  variable: "--font-mono",
+});
+
+// Chromium browsers flags emojis fix
+const fontFlag = localFont({
+  display: "auto",
+  src: "../../../public/fonts/Twemoji-Flags.woff2",
+  variable: "--font-twemoji",
+});
+
 export default async function LocaleLayout({
   children,
   params: { locale },
