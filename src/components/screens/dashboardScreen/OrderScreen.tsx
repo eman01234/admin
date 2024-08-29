@@ -1,13 +1,11 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
   Copy,
-  CreditCard,
   File,
   ListFilter,
-  MoreVertical,
-  Truck,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,7 +13,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -23,11 +20,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -39,11 +34,108 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import OrderDetail from "@/components/modules/orders/OrderDetail";
 
+type Order = {
+  id: string;
+  customer: string;
+  status: string;
+  amount: string;
+  date: string;
+  items: { name: string; quantity: number; price: string }[];
+  deliveryInfo: { name: string; address: string };
+  paymentInfo: { method: string; lastFour: string };
+};
+
+const orders: Order[] = [
+  {
+    id: "1",
+    customer: "Liam Johnson",
+    status: "Fulfilled",
+    amount: "$250.00",
+    date: "November 23, 2023",
+    items: [
+      { name: "Glimmer Lamps", quantity: 2, price: "$250.00" },
+      { name: "Aqua Filters", quantity: 1, price: "$49.00" },
+    ],
+    deliveryInfo: {
+      name: "Liam Johnson",
+      address: "1234 Main St., Anytown, CA 12345",
+    },
+    paymentInfo: { method: "Visa", lastFour: "4532" },
+  },
+  {
+    id: "2",
+    customer: "Olivia Smith",
+    status: "Declined",
+    amount: "$150.00",
+    date: "November 22, 2023",
+    items: [{ name: "Water Purifier", quantity: 1, price: "$150.00" }],
+    deliveryInfo: {
+      name: "Olivia Smith",
+      address: "5678 First Ave., Othertown, CA 67890",
+    },
+    paymentInfo: { method: "MasterCard", lastFour: "7890" },
+  },
+  {
+    id: "3",
+    customer: "Danat Ted",
+    status: "Fulfilled",
+    amount: "$250.00",
+    date: "November 23, 2023",
+    items: [
+      { name: "Glimmer Lamps", quantity: 2, price: "$250.00" },
+      { name: "Aqua Filters", quantity: 1, price: "$49.00" },
+    ],
+    deliveryInfo: {
+      name: "Liam Johnson",
+      address: "1234 Main St., Anytown, CA 12345",
+    },
+    paymentInfo: { method: "Visa", lastFour: "4532" },
+  },
+  {
+    id: "3",
+    customer: "Danat Ted",
+    status: "Fulfilled",
+    amount: "$250.00",
+    date: "November 23, 2023",
+    items: [
+      { name: "Glimmer Lamps", quantity: 2, price: "$250.00" },
+      { name: "Aqua Filters", quantity: 1, price: "$49.00" },
+    ],
+    deliveryInfo: {
+      name: "Liam Johnson",
+      address: "1234 Main St., Anytown, CA 12345",
+    },
+    paymentInfo: { method: "Visa", lastFour: "4532" },
+  },
+  {
+    id: "3",
+    customer: "Danat Ted",
+    status: "Fulfilled",
+    amount: "$250.00",
+    date: "November 23, 2023",
+    items: [
+      { name: "Glimmer Lamps", quantity: 2, price: "$250.00" },
+      { name: "Aqua Filters", quantity: 1, price: "$49.00" },
+    ],
+    deliveryInfo: {
+      name: "Liam Johnson",
+      address: "1234 Main St., Anytown, CA 12345",
+    },
+    paymentInfo: { method: "Visa", lastFour: "4532" },
+  },
+];
+
 const OrderScreen = () => {
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
+  const viewOrderDetails = (order: Order) => {
+    setSelectedOrder(order);
+  };
+
   return (
-    <main className="grid flex-1 gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-      <div className="grid auto-rows-max gap-4 md:gap-8 lg:col-span-2">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+    <div className="p-2 grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="lg:col-span-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2 pb-4">
           <Card>
             <CardHeader>
               <CardDescription>This Week</CardDescription>
@@ -104,44 +196,45 @@ const OrderScreen = () => {
                   Recent orders from your store.
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="overflow-y-auto max-h-60">
                 <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>Customer</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead className="text-right">Amount</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    <TableRow>
-                      <TableCell>Liam Johnson</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary">Fulfilled</Badge>
-                      </TableCell>
-                      <TableCell className="text-right">$250.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Olivia Smith</TableCell>
-                      <TableCell>
-                        <Badge variant="outline">Declined</Badge>
-                      </TableCell>
-                      <TableCell className="text-right">$150.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Noah Williams</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary">Fulfilled</Badge>
-                      </TableCell>
-                      <TableCell className="text-right">$350.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Emma Brown</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary">Fulfilled</Badge>
-                      </TableCell>
-                      <TableCell className="text-right">$450.00</TableCell>
-                    </TableRow>
+                    {orders.map((order) => (
+                      <TableRow key={order.id}>
+                        <TableCell>{order.customer}</TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={
+                              order.status === "Fulfilled"
+                                ? "secondary"
+                                : "outline"
+                            }
+                          >
+                            {order.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {order.amount}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => viewOrderDetails(order)}
+                          >
+                            View Details
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </CardContent>
@@ -149,9 +242,13 @@ const OrderScreen = () => {
           </TabsContent>
         </Tabs>
       </div>
-      {/* order detail */}
-      <OrderDetail />
-    </main>
+
+      {selectedOrder && (
+        <div className="lg:col-span-1">
+          <OrderDetail order={selectedOrder} />
+        </div>
+      )}
+    </div>
   );
 };
 

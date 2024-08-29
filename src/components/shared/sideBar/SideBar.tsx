@@ -79,6 +79,26 @@ const SideBar = (props: Props) => {
               <Users className="h-4 w-4" />
               Customers
             </Link>
+            <Link
+              href="/merchant"
+              onClick={() => handleLinkClick("/merchant")}
+              className={`flex items-center gap-3 rounded-lg ${
+                selectedLink === "/merchant" ? "bg-muted" : ""
+              } px-3 py-2 transition-all hover:text-primary`}
+            >
+              <Users className="h-4 w-4" />
+              Merchants
+            </Link>
+            <Link
+              href="/delivery"
+              onClick={() => handleLinkClick("/delivery")}
+              className={`flex items-center gap-3 rounded-lg ${
+                selectedLink === "/delivery" ? "bg-muted" : ""
+              } px-3 py-2 transition-all hover:text-primary`}
+            >
+              <Users className="h-4 w-4" />
+              Delivery
+            </Link>
           </nav>
         </div>
       </div>
