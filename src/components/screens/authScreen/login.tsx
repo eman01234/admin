@@ -49,7 +49,7 @@ export function Login() {
           <Button
             type="submit"
             className="w-full"
-            onClick={() => router.push("/product")}
+            onClick={() => router.push("/Home")}
           >
             Login
           </Button>
